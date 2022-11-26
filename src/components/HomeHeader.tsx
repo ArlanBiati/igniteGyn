@@ -16,7 +16,7 @@ export function HomeHeader() {
         <Text color="gray.100" fontSize="md">
           Olá,
         </Text>
-        <Heading color="gray.100" fontSize="md">
+        <Heading color="gray.100" fontSize="md" fontFamily="heading">
           Arlan
         </Heading>
       </VStack>
@@ -25,7 +25,7 @@ export function HomeHeader() {
           <Icon as={MaterialIcons} name="logout" color="gray.200" size={7} />
         }
         colorScheme="gray"
-        _pressed={{ bg: 'gray.700', color: 'gray.500' }}
+        _pressed={{ borderColor: 'green.500', borderWidth: 1 }}
       />
     </HStack>
   );
