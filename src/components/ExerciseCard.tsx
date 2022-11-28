@@ -2,9 +2,11 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { Heading, HStack, Icon, Image, Text, VStack } from 'native-base';
 import { Entypo } from '@expo/vector-icons';
 
-type Props = TouchableOpacityProps & {};
+type Props = TouchableOpacityProps & {
+  name: string;
+};
 
-export function ExerciseCard({ ...rest }: Props) {
+export function ExerciseCard({ name, ...rest }: Props) {
   return (
     <TouchableOpacity {...rest}>
       <HStack
@@ -29,7 +31,7 @@ export function ExerciseCard({ ...rest }: Props) {
 
         <VStack flex={1}>
           <Heading color="white" fontSize="lg" fontFamily="heading">
-            Remada Unilateral
+            {name}
           </Heading>
           <Text color="gray.200" fontSize="sm" mt={1} numberOfLines={2}>
             3 séries x 12 repetições
