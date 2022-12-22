@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
@@ -5,6 +6,8 @@ import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base';
 
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { api } from '@services/api';
 
 import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
@@ -36,6 +39,7 @@ export function SignUp() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormDataProps>({
     defaultValues: {
@@ -51,31 +55,55 @@ export function SignUp() {
     navigation.goBack();
   }
 
-  function handleSignUp(data: FormDataProps) {
-    console.log(data);
+  function handleSignUp({ name, email, password }: FormDataProps) {
+    try {
+      api.post('/users', {
+        name,
+        email,
+        password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // fetch('http://192.168.0.110:3333/users', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     name,
+    //     email,
+    //     password,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
+    reset();
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <VStack flex={1} px={10} pb={16}>
-        <Image
-          defaultSource={BackgroundImg}
-          source={BackgroundImg}
-          alt="Pessoas treinando"
-          resizeMode="contain"
-          position="absolute"
-        />
+    <VStack flex={1} px={10} pb={16}>
+      <Image
+        defaultSource={BackgroundImg}
+        source={BackgroundImg}
+        alt="Pessoas treinando"
+        resizeMode="contain"
+        position="absolute"
+      />
 
-        <Center my={24}>
-          <LogoSvg />
-          <Text color="gray.100" fontSize="sm">
-            Treine sua mente e seu corpo
-          </Text>
-        </Center>
+      <Center my={24}>
+        <LogoSvg />
+        <Text color="gray.100" fontSize="sm">
+          Treine sua mente e seu corpo
+        </Text>
+      </Center>
 
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
         <Center>
           <Heading color="gray.100" fontFamily="heading" mb={6}>
             Crie sua conta
@@ -152,14 +180,14 @@ export function SignUp() {
           />
         </Center>
 
-        <Center mt={24}>
+        <Center mt={12}>
           <Button
             title="Voltar para o login"
             variant="outline"
             onPress={handleGoBack}
           />
         </Center>
-      </VStack>
-    </ScrollView>
+      </ScrollView>
+    </VStack>
   );
 }

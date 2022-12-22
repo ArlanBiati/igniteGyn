@@ -41,7 +41,9 @@ export function Input({
           borderColor: 'green.500',
         }}
       />
-      <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
+      <FormControl.ErrorMessage _text={{ color: 'red.500' }}>
+        {errorMessage}
+      </FormControl.ErrorMessage>
     </FormControl>
   );
 }
