@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { FlatList, Heading, HStack, Text, VStack } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
+import { AppNavigatorRoutesProps } from '@routes/app.routes';
+
 import { Group } from '@components/Group';
 import { HomeHeader } from '@components/HomeHeader';
 import { ExerciseCard } from '@components/ExerciseCard';
-import { AppNavigatorRoutesProps } from '@routes/app.routes';
 
 export function Home() {
   const navigate = useNavigation<AppNavigatorRoutesProps>();
+
   const [groups, setGroups] = useState(['Costas', 'Bicipes', 'Perna', 'Ombro']);
   const [exercises, setExercises] = useState([
     'Puxada Frontal',

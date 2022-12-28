@@ -1,13 +1,19 @@
 import { Heading, HStack, Icon, IconButton, Text, VStack } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { useAuth } from '@hooks/useAuth';
+
 import { UserPhoto } from './UserPhoto';
 
+import defaultUserPhotoImg from '@assets/userPhotoDefault.png';
+
 export function HomeHeader() {
+  const { user, signOut } = useAuth();
+
   return (
     <HStack bgColor="gray.600" pt={16} pb={5} px={8} alignItems="center">
       <UserPhoto
-        source={{ uri: 'https://github.com/ArlanBiati.png' }}
+        source={user.avatar ? { uri: user.avatar } : defaultUserPhotoImg}
         alt="Imagem do usuário"
         size={16}
         mr={4}
@@ -17,7 +23,7 @@ export function HomeHeader() {
           Olá,
         </Text>
         <Heading color="gray.100" fontSize="md" fontFamily="heading">
-          Arlan
+          {user.name}
         </Heading>
       </VStack>
       <IconButton
@@ -26,6 +32,7 @@ export function HomeHeader() {
         }
         colorScheme="gray"
         _pressed={{ borderColor: 'green.500', borderWidth: 1 }}
+        onPress={signOut}
       />
     </HStack>
   );
