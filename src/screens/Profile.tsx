@@ -12,19 +12,25 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
+import { useAuth } from '@hooks/useAuth';
+
 import { ScreenHeader } from '@components/ScreenHeader';
 import { UserPhoto } from '@components/UserPhoto';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 
+// import defaultUserPhotoImg from '@assets/userPhotoDefault.png';
+
 const PHOTO_SIZE = 33;
 
 export function Profile() {
-  const [photoIsLoading, setPhotoIsLoading] = useState(false);
-  const [userPhoto, setUserPhoto] = useState(
-    'https://github.com/ArlanBiati.png'
-  );
+  const { user } = useAuth();
+
   const toast = useToast();
+
+  const [photoIsLoading, setPhotoIsLoading] = useState(false);
+  const [userPhoto, setUserPhoto] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleUserPhotoSelect() {
     setPhotoIsLoading(true);
@@ -63,6 +69,17 @@ export function Profile() {
     }
   }
 
+  async function handleUpdateProfile() {
+    setIsLoading(true);
+    try {
+      console.log('Alooou');
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <VStack flex={1}>
       <ScreenHeader title="Perfil" />
@@ -96,8 +113,13 @@ export function Profile() {
             </Text>
           </TouchableOpacity>
 
-          <Input bgColor="gray.600" placeholder="Nome" />
-          <Input bgColor="gray.600" placeholder="E-mail" isDisabled />
+          <Input bgColor="gray.600" value={user.name} placeholder="Nome" />
+          <Input
+            bgColor="gray.600"
+            value={user.email}
+            placeholder="E-mail"
+            isDisabled
+          />
         </Center>
 
         <VStack px={10} mt={12} mb={9}>
@@ -116,7 +138,12 @@ export function Profile() {
             secureTextEntry
           />
 
-          <Button title="Atualizar" mt={4} />
+          <Button
+            title="Atualizar"
+            mt={4}
+            isLoading={isLoading}
+            onPress={handleUpdateProfile}
+          />
         </VStack>
       </ScrollView>
     </VStack>
