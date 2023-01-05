@@ -77,9 +77,12 @@ export function Exercise() {
         title: 'Parabéns! Exercício registrado em seu histórico',
         placement: 'top',
         bgColor: 'green.700',
+        duration: 1500,
       });
 
-      navigation.navigate('history');
+      setTimeout(() => {
+        navigation.navigate('history');
+      }, 2000);
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError

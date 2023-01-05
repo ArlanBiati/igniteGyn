@@ -65,6 +65,7 @@ export function History() {
             </Heading>
           )}
           px={8}
+          mb={4}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={
             exercises.length === 0 && { flex: 1, justifyContent: 'center' }
